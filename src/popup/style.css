@@ -16,23 +16,3 @@ h3,
 p {
   margin: 0;
 }
-
-.content-item {
-  font-size: 14px;
-  padding: 5px 10px;
-  text-decoration: none;
-  border-radius: 6px;
-  margin: 5px;
-  background-color: #f8f8f8;
-  cursor: pointer;
-
-  /* overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical; */
-}
-
-.content-item:hover {
-  background-color: #fff;
-}

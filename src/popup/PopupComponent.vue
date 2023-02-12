@@ -4,36 +4,84 @@
   </a> -->
   <div>占位 🔍</div>
   <ul>
-    <li
-      v-for="(item, index) in arr"
-      :key="index"
-      class="content-item"
-      @click="onClick(item)"
-    >
-      {{ item }}
+    <li class="add-group">
+      <el-input
+        v-model="textarea"
+        :rows="1"
+        autosize
+        type="textarea"
+        placeholder="添加一条新数据"
+      />
+      <el-button type="primary" @click="addItem">Add</el-button>
+    </li>
+    <li v-for="item in store.arr" :key="item" class="content-item">
+      <el-popover
+        placement="top-start"
+        :width="200"
+        trigger="hover"
+        :content="item"
+      >
+        <template #reference>
+          <span class="text" @click="onClick(item)">{{ item }}</span>
+        </template>
+      </el-popover>
     </li>
   </ul>
-  <!-- <el-button type="primary">Primary</el-button> -->
 </template>
 <script setup lang="ts">
 // import { ElButton } from 'element-plus';
 import { autoFill } from './tab';
-import { reactive } from 'vue';
-import Store from './store';
+import { reactive, ref } from 'vue';
+import { ContentStore } from './store';
 
 function getExtensionUrl(path: string) {
   return chrome.runtime.getURL(path);
 }
 
-const arr = reactive<string[]>([]);
+const store = ContentStore;
 
-arr.push(...Store.get());
+const textarea = ref('');
 
-function onClick(item: (typeof arr)[0]) {
+function addItem() {
+  if (textarea.value) {
+    if (store.add(textarea.value)) {
+      textarea.value = '';
+    }
+  }
+}
+
+function onClick(item: string) {
   autoFill(item);
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 @import '../common.css';
+.add-group {
+  display: flex;
+}
+
+.content-item {
+  font-size: 16px;
+  padding: 5px 10px;
+  text-decoration: none;
+  border-radius: 6px;
+  margin: 5px;
+  background-color: #fff;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  line-height: 30px;
+
+  .text {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.content-item:hover {
+  background-color: #f8f8f8;
+}
 </style>
