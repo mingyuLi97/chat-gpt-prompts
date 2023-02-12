@@ -21,30 +21,16 @@
   },
   "content_scripts": [
     {
-      "matches": [
-        "http://*/*",
-        "https://*/*",
-        "*://*/*"
-      ],
-      "js": [
-        "src/content-scripts/content.ts"
-      ],
-      "css": [
-        "src/content-scripts/content.css"
-      ]
+      "matches": ["http://*/*", "https://*/*", "*://*/*"],
+      "js": ["src/content-scripts/content.ts"],
+      "css": ["src/content-scripts/content.css"]
     }
   ],
   "web_accessible_resources": [
     {
-      "resources": [
-        "src/content-scripts/content.css",
-        "icon-128.png"
-      ],
-      "matches": [
-        "http://*/*",
-        "https://*/*",
-        "*://*/*"
-      ]
+      "resources": ["src/content-scripts/content.css", "icon-128.png"],
+      "matches": ["http://*/*", "https://*/*", "*://*/*"]
     }
-  ]
+  ],
+  "permissions": ["activeTab", "scripting"]
 }
