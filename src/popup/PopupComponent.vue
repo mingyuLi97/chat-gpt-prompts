@@ -58,7 +58,7 @@ import { ElInput, ElPopover, ElIcon, ElButton } from 'element-plus';
 import { autoFill } from './tab';
 import { throttle } from '../utils';
 import { ref, computed, watch } from 'vue';
-import { ContentStore } from './store';
+import { useLocalStore } from './store';
 // @ts-ignore
 import fuzzysearch from 'fuzzysearch';
 
@@ -66,7 +66,7 @@ function getExtensionUrl(path: string) {
   return chrome.runtime.getURL(path);
 }
 
-const store = ContentStore;
+const store = useLocalStore();
 
 const textarea = ref('');
 const search = ref('');

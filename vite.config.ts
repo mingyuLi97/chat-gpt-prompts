@@ -3,7 +3,7 @@ import vue from '@vitejs/plugin-vue';
 import { crx } from '@crxjs/vite-plugin';
 import manifest from './src/manifest.json';
 import packageJson from './package.json';
-
+// @ts-ignore
 import ElementPlus from 'unplugin-element-plus/vite';
 
 manifest.version = packageJson.version;

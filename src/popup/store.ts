@@ -1,22 +1,23 @@
-import { reactive, watch } from 'vue';
+import { reactive, watch, toRaw } from 'vue';
 import Mock from './mock';
 
 const KEY = 'AUTO_FILL_LIST';
 
-const useLocalStore = () => {
+export const useLocalStore = () => {
   const arr = reactive<string[]>([]);
-  const list = JSON.parse(localStorage.getItem(KEY) ?? '[]');
-  arr.push(...[...new Set(Mock.concat(list))]);
+
+  chrome.storage.local.get(KEY).then(store => {
+    console.log(`[store] `, store[KEY]);
+    arr.push(...new Set((store[KEY] as string[]) ?? []));
+  });
 
   watch(arr, (newVal, oldVal) => {
-    console.log(`[store] 写入数据`, newVal);
-    localStorage.setItem(KEY, JSON.stringify(newVal));
+    chrome.storage.local.set({ [KEY]: toRaw(newVal) });
   });
 
   function add(v: string) {
     const idx = arr.findIndex(item => item === v);
     if (idx > -1) {
-      console.log(`[store] 已经存在了`);
       return false;
     }
     arr.push(v);
@@ -32,5 +33,3 @@ const useLocalStore = () => {
 
   return { add, remove, arr };
 };
-
-export const ContentStore = useLocalStore();

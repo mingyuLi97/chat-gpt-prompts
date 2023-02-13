@@ -32,5 +32,5 @@
       "matches": ["http://*/*", "https://*/*", "*://*/*"]
     }
   ],
-  "permissions": ["activeTab", "scripting"]
+  "permissions": ["activeTab", "scripting", "storage"]
 }
