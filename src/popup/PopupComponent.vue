@@ -11,21 +11,12 @@
           placeholder="请输入搜索关键字"
           :prefix-icon="Search"
         />
-        <el-icon @click="showAdd = !showAdd" class="icon" title="增加数据"
-          ><Plus
+        <el-icon @click="showAdd = !showAdd" class="icon" title="设置"
+          ><Operation
         /></el-icon>
       </div>
 
-      <div class="add-group" v-show="showAdd">
-        <el-input
-          v-model="textarea"
-          :rows="1"
-          autosize
-          type="textarea"
-          placeholder="添加一条新数据"
-        />
-        <el-button class="add" type="primary" @click="addItem">增加</el-button>
-      </div>
+      <HandleResource :visible="showAdd" @add-item="addItem" />
     </section>
     <div class="blank"></div>
 
@@ -53,22 +44,23 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Search, CircleClose, Plus } from '@element-plus/icons-vue';
-import { ElInput, ElPopover, ElIcon, ElButton } from 'element-plus';
+import { Search, CircleClose, Operation } from '@element-plus/icons-vue';
+import { ElInput, ElPopover, ElIcon } from 'element-plus';
 import { autoFill } from './tab';
 import { throttle } from '../utils';
 import { ref, computed, watch } from 'vue';
 import { useLocalStore } from './store';
 // @ts-ignore
 import fuzzysearch from 'fuzzysearch';
+import HandleResource from './components/HandleResource.vue';
 
 function getExtensionUrl(path: string) {
   return chrome.runtime.getURL(path);
 }
 
 const store = useLocalStore();
+console.log(`[PopupComponent] `, store);
 
-const textarea = ref('');
 const search = ref('');
 const throttleKey = ref('');
 const showAdd = ref(false);
@@ -85,12 +77,8 @@ const showArr = computed(() => {
   return store.arr.filter(text => fuzzysearch(throttleKey.value, text));
 });
 
-function addItem() {
-  if (textarea.value) {
-    if (store.add(textarea.value)) {
-      textarea.value = '';
-    }
-  }
+function addItem(content: string) {
+  store.add(content);
   showAdd.value = false;
 }
 
@@ -126,13 +114,6 @@ function onClick(item: string) {
       &:hover {
         color: aqua;
       }
-    }
-  }
-  .add-group {
-    display: flex;
-    margin-top: 5px;
-    .add {
-      margin-left: 5px;
     }
   }
 }

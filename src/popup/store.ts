@@ -1,17 +1,16 @@
 import { reactive, watch, toRaw } from 'vue';
-import Mock from './mock';
 
-const KEY = 'AUTO_FILL_LIST';
+export const KEY = 'AUTO_FILL_LIST';
 
 export const useLocalStore = () => {
   const arr = reactive<string[]>([]);
 
   chrome.storage.local.get(KEY).then(store => {
-    console.log(`[store] `, store[KEY]);
     arr.push(...new Set((store[KEY] as string[]) ?? []));
   });
 
   watch(arr, (newVal, oldVal) => {
+    console.log(`[store] `, toRaw(newVal));
     chrome.storage.local.set({ [KEY]: toRaw(newVal) });
   });
 
@@ -20,7 +19,7 @@ export const useLocalStore = () => {
     if (idx > -1) {
       return false;
     }
-    arr.push(v);
+    arr.unshift(v);
     return true;
   }
 
