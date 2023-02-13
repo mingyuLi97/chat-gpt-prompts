@@ -25,6 +25,8 @@
           <span class="text" @click="onClick(item)">{{ item }}</span>
         </template>
       </el-popover>
+
+      <el-icon @click="remove(item)"><i-ep-circle-close /></el-icon>
     </li>
   </ul>
 </template>
@@ -50,6 +52,10 @@ function addItem() {
   }
 }
 
+function remove(item: string) {
+  store.remove(item);
+}
+
 function onClick(item: string) {
   autoFill(item);
 }
@@ -71,6 +77,7 @@ function onClick(item: string) {
   cursor: pointer;
   display: flex;
   flex-direction: row;
+  align-items: center;
   line-height: 30px;
 
   .text {

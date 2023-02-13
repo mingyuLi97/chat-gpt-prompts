@@ -8,7 +8,10 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElIcon: typeof import('element-plus/es')['ElIcon']
     ElInput: typeof import('element-plus/es')['ElInput']
     ElPopover: typeof import('element-plus/es')['ElPopover']
+    ICircleClose: typeof import('~icons/ci/rcle-close')['default']
+    IEpCircleClose: typeof import('~icons/ep/circle-close')['default']
   }
 }

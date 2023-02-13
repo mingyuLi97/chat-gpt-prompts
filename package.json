@@ -13,12 +13,15 @@
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss,md,vue}'"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.0.10",
     "element-plus": "^2.2.30",
     "vue": "^3.2.37",
     "webextension-polyfill": "^0.9.0"
   },
   "devDependencies": {
     "@crxjs/vite-plugin": "^1.0.13",
+    "@iconify-json/ci": "^1.1.7",
+    "@iconify-json/ep": "^1.1.8",
     "@types/chrome": "^0.0.193",
     "@types/jest": "^28.1.6",
     "@types/webextension-polyfill": "^0.9.0",
@@ -33,6 +36,7 @@
     "sass": "^1.54.4",
     "typescript": "^4.6.4",
     "unplugin-auto-import": "^0.14.2",
+    "unplugin-icons": "^0.15.2",
     "unplugin-vue-components": "^0.23.0",
     "vite": "^3.0.0",
     "vitest": "^0.21.0",
