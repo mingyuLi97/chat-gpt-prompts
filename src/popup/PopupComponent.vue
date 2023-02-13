@@ -2,41 +2,59 @@
   <!-- <a :href="getExtensionUrl('src/options/index.html')" target="_blank">
     Open options page1111
   </a> -->
-  <el-input
-    v-model="search"
-    class="w-50 m-2"
-    placeholder="Please Input"
-    :suffix-icon="Search"
-  />
-  <ul>
-    <li class="add-group">
-      <el-input
-        v-model="textarea"
-        :rows="1"
-        autosize
-        type="textarea"
-        placeholder="添加一条新数据"
-      />
-      <el-button type="primary" @click="addItem">Add</el-button>
-    </li>
-    <li v-for="item in showArr" :key="item" class="content-item">
-      <el-popover
-        placement="top-start"
-        :width="200"
-        trigger="hover"
-        :content="item"
-      >
-        <template #reference>
-          <span class="text" @click="onClick(item)">{{ item }}</span>
-        </template>
-      </el-popover>
+  <div class="popup-container">
+    <section class="top-bar">
+      <div class="search-group">
+        <el-input
+          v-model="search"
+          :style="{ '--el-input-border-radius': '999px' }"
+          placeholder="请输入搜索关键字"
+          :prefix-icon="Search"
+        />
+        <el-icon @click="showAdd = !showAdd" class="icon" title="增加数据"
+          ><Plus
+        /></el-icon>
+      </div>
 
-      <el-icon @click="remove(item)"><i-ep-circle-close /></el-icon>
-    </li>
-  </ul>
+      <div class="add-group" v-show="showAdd">
+        <el-input
+          v-model="textarea"
+          :rows="1"
+          autosize
+          type="textarea"
+          placeholder="添加一条新数据"
+        />
+        <el-button class="add" type="primary" @click="addItem">增加</el-button>
+      </div>
+    </section>
+    <div class="blank"></div>
+
+    <ul class="content-group">
+      <li v-for="item in showArr" :key="item" class="content-item">
+        <el-popover
+          v-if="showArr.length >= 10"
+          placement="top-start"
+          :width="300"
+          trigger="hover"
+          :content="item"
+        >
+          <template #reference>
+            <span class="text limit" @click="onClick(item)">{{ item }}</span>
+          </template>
+        </el-popover>
+
+        <span v-else class="text" @click="onClick(item)">{{ item }}</span>
+
+        <el-icon @click="remove(item)" class="del-icon"
+          ><CircleClose
+        /></el-icon>
+      </li>
+    </ul>
+  </div>
 </template>
 <script setup lang="ts">
-import { Search } from '@element-plus/icons-vue';
+import { Search, CircleClose, Plus } from '@element-plus/icons-vue';
+import { ElInput, ElPopover, ElIcon, ElButton } from 'element-plus';
 import { autoFill } from './tab';
 import { throttle } from '../utils';
 import { ref, computed, watch } from 'vue';
@@ -53,6 +71,7 @@ const store = ContentStore;
 const textarea = ref('');
 const search = ref('');
 const throttleKey = ref('');
+const showAdd = ref(false);
 
 const updateThrottleKey = throttle((v: string) => {
   throttleKey.value = v;
@@ -72,6 +91,7 @@ function addItem() {
       textarea.value = '';
     }
   }
+  showAdd.value = false;
 }
 
 function remove(item: string) {
@@ -84,17 +104,56 @@ function onClick(item: string) {
 </script>
 
 <style lang="scss" scoped>
-@import '../common.css';
-.add-group {
+.popup-container {
   display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 600px;
+}
+
+.top-bar {
+  .search-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--el-color-primary);
+
+    .icon {
+      padding: 2px 3px 2px 10px;
+      font-size: 23px;
+      color: #fff;
+      &:hover {
+        color: aqua;
+      }
+    }
+  }
+  .add-group {
+    display: flex;
+    margin-top: 5px;
+    .add {
+      margin-left: 5px;
+    }
+  }
+}
+
+.content-group {
+  padding: 10px;
+  flex: 1;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
 }
 
 .content-item {
+  box-sizing: border-box;
   font-size: 16px;
   padding: 5px 10px;
   text-decoration: none;
   border-radius: 6px;
-  margin: 5px;
+  margin: 5px 0;
   background-color: #fff;
   cursor: pointer;
   display: flex;
@@ -104,13 +163,22 @@ function onClick(item: string) {
 
   .text {
     flex: 1;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    &.limit {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 }
 
+.del-icon {
+  display: none;
+}
+
 .content-item:hover {
-  background-color: #f8f8f8;
+  box-shadow: 2px 2px 2px rgb(0 0 0 / 10%);
+  .del-icon {
+    display: block;
+  }
 }
 </style>

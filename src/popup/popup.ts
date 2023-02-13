@@ -1,7 +1,9 @@
 import { createApp } from 'vue';
-import './style.css';
 import PopupComponent from './PopupComponent.vue';
+import Tip from './TipView.vue';
 import { setTab } from './tab';
+import '../common.css';
+import './style.css';
 
 (async () => {
   const [tab] = await chrome.tabs.query({
@@ -9,8 +11,10 @@ import { setTab } from './tab';
     currentWindow: true,
     url: 'https://chat.openai.com/chat/*',
   });
-  if (!tab) return;
-  setTab(tab);
-
-  createApp(PopupComponent).mount('#app');
+  if (tab) {
+    setTab(tab);
+    createApp(PopupComponent).mount('#app');
+  } else {
+    createApp(Tip).mount('#app');
+  }
 })();
