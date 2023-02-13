@@ -2,7 +2,12 @@
   <!-- <a :href="getExtensionUrl('src/options/index.html')" target="_blank">
     Open options page1111
   </a> -->
-  <div>占位 🔍</div>
+  <el-input
+    v-model="search"
+    class="w-50 m-2"
+    placeholder="Please Input"
+    :suffix-icon="Search"
+  />
   <ul>
     <li class="add-group">
       <el-input
@@ -14,7 +19,7 @@
       />
       <el-button type="primary" @click="addItem">Add</el-button>
     </li>
-    <li v-for="item in store.arr" :key="item" class="content-item">
+    <li v-for="item in showArr" :key="item" class="content-item">
       <el-popover
         placement="top-start"
         :width="200"
@@ -31,10 +36,13 @@
   </ul>
 </template>
 <script setup lang="ts">
-// import { ElButton } from 'element-plus';
+import { Search } from '@element-plus/icons-vue';
 import { autoFill } from './tab';
-import { reactive, ref } from 'vue';
+import { throttle } from '../utils';
+import { ref, computed, watch } from 'vue';
 import { ContentStore } from './store';
+// @ts-ignore
+import fuzzysearch from 'fuzzysearch';
 
 function getExtensionUrl(path: string) {
   return chrome.runtime.getURL(path);
@@ -43,6 +51,20 @@ function getExtensionUrl(path: string) {
 const store = ContentStore;
 
 const textarea = ref('');
+const search = ref('');
+const throttleKey = ref('');
+
+const updateThrottleKey = throttle((v: string) => {
+  throttleKey.value = v;
+}, 500);
+
+watch(search, function (newVal) {
+  updateThrottleKey(newVal);
+});
+
+const showArr = computed(() => {
+  return store.arr.filter(text => fuzzysearch(throttleKey.value, text));
+});
 
 function addItem() {
   if (textarea.value) {

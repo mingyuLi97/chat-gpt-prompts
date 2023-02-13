@@ -1,10 +1,11 @@
 import { reactive, watch } from 'vue';
+import Mock from './mock';
 
 const KEY = 'AUTO_FILL_LIST';
 
 const useLocalStore = () => {
   const arr = reactive<string[]>([]);
-
+  arr.push(...Mock);
   const list = localStorage.getItem(KEY);
   if (list) {
     arr.push(...JSON.parse(list));

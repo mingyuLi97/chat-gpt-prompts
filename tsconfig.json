@@ -12,7 +12,8 @@
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "composite": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": false
   },
   "exclude": ["build", "node_modules", "dist"],
   "include": [
