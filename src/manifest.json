@@ -1,9 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Vitaly Extension",
-  "description": "A starter template for Chrome Extension (MV3) with Vite, Vue and Typescript",
+  "name": "chat-gpt-prompts",
+  "description": "一个 chat-gpt 的 chrome 插件，用来帮助用户存储、收集一些调教 gpt 的语料",
   "version": "0.0.1",
-  "homepage_url": "https://github.com/elwin013/vitaly-extension",
   "action": {
     "default_popup": "src/popup/index.html",
     "default_icon": {
