@@ -13,7 +13,7 @@
 
 ## 安装
 
-1. 下载最新的包 `.crx` 并解压
+1. [下载](https://github.com/mingyuLi97/chat-gpt-prompts/releases) 最新的包并解压
 2. 打开 `chrome://extensions`
 3. 开启开发者模式
 4. 点击 `Load unpacked` 上传压缩包
