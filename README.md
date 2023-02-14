@@ -1,15 +1,15 @@
 # ChatGpt Prompts 🤖
 
-一个 chat-gpt 的 chrome 插件，用来帮助用户存储、收集一些调教 gpt 的语料，很便捷的插入到 [chat 页面](https://chat.openai.com/chat/) 的输入框。
+一个 chat-gpt 的 chrome 插件，用来帮助用户存储、收集一些调教 gpt 的语料，自动插入到 [chat 页面](https://chat.openai.com/chat/) 的输入框。
+
+![](https://limy-1309594960.cos.ap-beijing.myqcloud.com/202302141216486.gif)
 
 ## 功能
 
 - 文本自动填充到 [chat 页面](https://chat.openai.com/chat/) 的输入框
-  ![](https://limy-1309594960.cos.ap-beijing.myqcloud.com/202302141216486.gif)
+
 - 添加自定义的 prompts
 - 自动抓取、导入 [🧠ChatGPT 中文调教指南](https://github.com/PlexPt/awesome-chatgpt-prompts-zh) 数据
-
-![](https://limy-1309594960.cos.ap-beijing.myqcloud.com/202302141220532.gif)
 
 ## 安装
 
