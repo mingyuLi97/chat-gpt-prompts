@@ -16,7 +16,11 @@
         /></el-icon>
       </div>
 
-      <HandleResource :visible="showAdd" @add-item="addItem" />
+      <HandleResource
+        :visible="showAdd"
+        @add-item="addItem"
+        @clear="clearStore"
+      />
     </section>
     <div class="blank"></div>
 
@@ -84,6 +88,10 @@ function addItem(content: string) {
 
 function remove(item: string) {
   store.remove(item);
+}
+
+function clearStore() {
+  store.clear();
 }
 
 function onClick(item: string) {

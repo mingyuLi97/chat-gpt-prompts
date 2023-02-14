@@ -1,6 +1,6 @@
 <template>
   <div class="handle-resource" v-show="visible">
-    <div class="add-item">
+    <div class="operation-item add-item">
       <el-input
         v-model="textarea"
         :rows="1"
@@ -10,7 +10,7 @@
       />
       <el-button class="add" type="primary" @click="addItem">增加</el-button>
     </div>
-    <el-button class="go-link">
+    <el-button class="operation-item go-link">
       去
       <OpenLink
         link="https://github.com/PlexPt/awesome-chatgpt-prompts-zh#readme"
@@ -18,6 +18,9 @@
       />
       页面抓取
     </el-button>
+    <el-button class="operation-item" type="danger" @click="$emit('clear')"
+      >清除全部数据</el-button
+    >
   </div>
 </template>
 
@@ -29,6 +32,7 @@ import OpenLink from './OpenLink.vue';
 defineProps<{ visible: boolean }>();
 const emits = defineEmits<{
   (event: 'add-item', content: string): void;
+  (event: 'clear'): void;
 }>();
 
 const textarea = ref('');
@@ -42,7 +46,13 @@ function addItem() {
 .handle-resource {
   display: flex;
   flex-direction: column;
+  margin: 0 10px;
 }
+
+.operation-item {
+  margin-top: 5px;
+}
+
 .add-item {
   width: 100%;
   display: flex;
@@ -53,7 +63,6 @@ function addItem() {
 }
 
 .go-link {
-  margin-top: 5px;
   display: flex;
   justify-content: center;
 }

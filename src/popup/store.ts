@@ -30,5 +30,9 @@ export const useLocalStore = () => {
     }
   }
 
-  return { add, remove, arr };
+  function clear() {
+    arr.splice(0, arr.length);
+  }
+
+  return { add, remove, clear, arr };
 };

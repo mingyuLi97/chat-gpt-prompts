@@ -5,3 +5,7 @@ body {
   color: #000;
   background-color: #f7f8fa;
 }
+
+.el-button + .el-button {
+  margin-left: 0;
+}
