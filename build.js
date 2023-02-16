@@ -10,16 +10,16 @@ const name = packageJson.name;
 console.log(`Building '${name}' with manifest from ${manifestPath}`);
 
 try {
-  const extensionPath = path.join('dist', name + '.crx');
+  const extensionPath = path.join('dist', name + '.zip');
   if (fs.existsSync(extensionPath)) {
     fs.rmSync(extensionPath);
   }
   crx3([manifestPath], {
     keyPath: path.join('secrets', 'private-key.pem'),
-    crxPath: extensionPath,
+    zipPath: extensionPath,
   }).then(function () {
     console.log(
-      'Extension package written to ' + path.join('dist', name + '.crx')
+      'Extension package written to ' + path.join('dist', name + '.zip')
     );
   });
 } catch (errorMsg) {

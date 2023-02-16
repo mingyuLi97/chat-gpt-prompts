@@ -3,6 +3,11 @@ import PopupComponent from './PopupComponent.vue';
 import Tip from './views/TipView.vue';
 import CollectionView from './views/CollectionView.vue';
 import { setTab } from './tab';
+import {
+  isAwesomeChatGPTPromptsZHPage,
+  isChatGPTPage,
+  URLPatterns,
+} from '../constants';
 import '../common.css';
 import './style.css';
 
@@ -10,24 +15,18 @@ import './style.css';
   const [tab] = await chrome.tabs.query({
     active: true,
     currentWindow: true,
-    url: [
-      'https://chat.openai.com/chat/*',
-      'https://github.com/PlexPt/awesome-chatgpt-prompts-zh/*',
-    ],
+    url: URLPatterns,
   });
-  console.log(`[popup] `, tab);
   if (!tab) {
     createApp(Tip).mount('#app');
     return;
   }
   setTab(tab);
-  if (tab.url?.includes('chat.openai.com/chat')) {
+  if (isChatGPTPage(tab.url)) {
     createApp(PopupComponent).mount('#app');
     return;
   }
-
-  if (tab.url?.includes('awesome-chatgpt-prompts')) {
-    console.log(`Render 【CollectionView】`);
+  if (isAwesomeChatGPTPromptsZHPage(tab.url)) {
     createApp(CollectionView).mount('#app');
     return;
   }
