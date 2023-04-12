@@ -2,7 +2,7 @@
   "name": "chat-gpt-prompts",
   "description": "一个 chat-gpt 的 chrome 插件，用来帮助用户存储、收集一些调教 gpt 的语料",
   "private": true,
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "scripts": {
     "dev": "vite",
