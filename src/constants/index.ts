@@ -1,5 +1,5 @@
 export const URLPatterns = [
-  'https://chat.openai.com/chat/*',
+  'https://chat.openai.com/chat*',
   'https://github.com/PlexPt/awesome-chatgpt-prompts-zh/*',
 ];
 
