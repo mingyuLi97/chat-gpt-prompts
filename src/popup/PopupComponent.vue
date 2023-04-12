@@ -1,7 +1,4 @@
 <template>
-  <!-- <a :href="getExtensionUrl('src/options/index.html')" target="_blank">
-    Open options page1111
-  </a> -->
   <div class="popup-container">
     <section class="top-bar">
       <div class="search-group">
@@ -34,11 +31,15 @@
           :content="item"
         >
           <template #reference>
-            <span class="text limit" @click="onClick(item)">{{ item }}</span>
+            <span class="text limit" v-click="t => onClick(t, item)">{{
+              item
+            }}</span>
           </template>
         </el-popover>
 
-        <span v-else class="text" @click="onClick(item)">{{ item }}</span>
+        <span v-else class="text" v-click="t => onClick(t, item)">{{
+          item
+        }}</span>
 
         <el-icon @click="remove(item)" class="del-icon"
           ><CircleClose
@@ -50,17 +51,13 @@
 <script setup lang="ts">
 import { Search, CircleClose, Operation } from '@element-plus/icons-vue';
 import { ElInput, ElPopover, ElIcon } from 'element-plus';
-import { autoFill } from './tab';
+import { autoFill, clickSubmit } from './bridges';
 import { throttle } from '../utils';
 import { ref, computed, watch } from 'vue';
 import { useLocalStore } from './store';
-// @ts-ignore
 import fuzzysearch from 'fuzzysearch';
 import HandleResource from './components/HandleResource.vue';
-
-function getExtensionUrl(path: string) {
-  return chrome.runtime.getURL(path);
-}
+import { ClickType } from './directives/x-click';
 
 const store = useLocalStore();
 console.log(`[PopupComponent] `, store);
@@ -94,8 +91,11 @@ function clearStore() {
   store.clear();
 }
 
-function onClick(item: string) {
+function onClick(type: ClickType, item: string) {
   autoFill(item);
+  if (type === 'db-click') {
+    clickSubmit();
+  }
 }
 </script>
 

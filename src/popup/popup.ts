@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import XClick from './directives/x-click';
 import PopupComponent from './PopupComponent.vue';
 import Tip from './views/TipView.vue';
 import CollectionView from './views/CollectionView.vue';
@@ -23,7 +24,7 @@ import './style.css';
   }
   setTab(tab);
   if (isChatGPTPage(tab.url)) {
-    createApp(PopupComponent).mount('#app');
+    createApp(PopupComponent).use(XClick).mount('#app');
     return;
   }
   if (isAwesomeChatGPTPromptsZHPage(tab.url)) {
